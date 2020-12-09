@@ -1,4 +1,4 @@
-module.exports = (Sentiment) => {
+module.exports = (Sentiment) => { 
     const analyzer = {
         getSentiment: (sentence) => {
             const sentiment = new Sentiment();

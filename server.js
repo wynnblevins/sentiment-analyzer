@@ -5,6 +5,9 @@ const morgan = require('morgan');
 const app = express();
 const PORT = process.env.PORT || 8080;
 const path = require('path');
+const commons = require('@market-predictor/market-predictor-commons');
+
+require('dotenv').config()
 
 // ===== Middleware ====
 app.use(morgan('dev'))
@@ -23,7 +26,29 @@ app.use(function(err, req, res, next) {
 });
 
 const sentimentService = require('./services/sentiment.service')(Sentiment);
-require('./controllers/sentiment.controller.js')(app, sentimentService);
+
+var kafka = require('kafka-node'),
+    Consumer = kafka.Consumer,
+    client = new kafka.KafkaClient(),
+    consumer = new Consumer(
+        client,
+        [
+            { topic: 'chatter', partition: 0 }
+        ],
+        {
+            autoCommit: false
+        }
+    );
+consumer.on('message', function (message) {
+	const sentimentResult = sentimentService.getSentiment(message);
+	
+	commons.SentimentRecord.create({ 
+		id: sentimentResult.id,
+		text: sentimentResult.text,
+		score: sentimentResult.sentiment_score 
+	})
+});
+
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.resolve('build/')));

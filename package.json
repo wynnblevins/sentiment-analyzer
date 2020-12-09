@@ -10,9 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@market-predictor/market-predictor-commons": "1.0.5-snapshot10",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "kafka-node": "^5.0.0",
     "morgan": "^1.10.0",
-    "sentiment": "^5.0.2"
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "sentiment": "^5.0.2",
+    "sequelize": "^6.3.5"
   }
 }
