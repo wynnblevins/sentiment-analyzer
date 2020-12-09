@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@market-predictor/market-predictor-commons": "1.0.5-snapshot10",
+    "@market-predictor/market-predictor-commons": "1.0.7",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "kafka-node": "^5.0.0",
